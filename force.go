@@ -225,6 +225,10 @@ func (client *Client) LoginPassword(username, password, token string) error {
 	return nil
 }
 
+func (client *Client) HttpRequest(method, url string, body io.Reader) ([]byte, error) {
+	return client.httpRequest(method, url, body)
+}
+
 // httpRequest executes an HTTP request to the salesforce server and returns the response data in byte buffer.
 func (client *Client) httpRequest(method, url string, body io.Reader) ([]byte, error) {
 	req, err := http.NewRequest(method, url, body)
@@ -252,6 +256,10 @@ func (client *Client) httpRequest(method, url string, body io.Reader) ([]byte, e
 	}
 
 	return ioutil.ReadAll(resp.Body)
+}
+
+func (client *Client) MakeURL(req string) string {
+	return client.makeURL(req)
 }
 
 // makeURL generates a REST API URL based on baseURL, APIVersion of the client.
